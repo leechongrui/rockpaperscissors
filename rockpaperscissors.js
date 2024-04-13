@@ -4,7 +4,7 @@ const game = {
 };
 
 function getComputerChoice() {
-    var randomNum = Math.random();
+    const randomNum = Math.random();
     if (randomNum < 0.333) {
       return'Rock';
     } else if (randomNum > 0.666) {
@@ -14,68 +14,88 @@ function getComputerChoice() {
     }
 }
 
-function getPlayerChoice() {
-let playerChoice = prompt("Choose either Rock, Paper or Scissors!", "Rock")
-if (playerChoice.toLowerCase() == "rock" ) {
-  return "Rock";
-}
-else if (playerChoice.toLowerCase() == "paper" ) {
-  return "Paper";
-}
-else if (playerChoice.toLowerCase() == "scissors" ) {
-  return "Scissors";
-}
-else {return playerChoice}
-}
-
 function playRound(playerSelection, computerSelection) {
-  console.log("Player chose " + playerSelection)
-  console.log("Computer chose " + computerSelection)
+  const playerChoice = document.querySelector("playerchoice")
+  playerchoice.textContent("Player chose " + playerSelection)
+  const computerchoice = document.querySelector("computerchoice")
+  computerchoice.textContent("Computer chose " + computerSelection)
   if (playerSelection === "Rock" && computerSelection === "Paper") {
-    console.log("You Lose! Paper beats Rock");
+    const current = document.querySelector("current");
+    current.textContent = "You Lose! Paper beats Rock";
     game.loss++;
+    const computer = document.querySelector("computerscore");
+    computer.textContent = "Computer: " + game.loss;
   }
   else if (playerSelection === "Rock" && computerSelection === "Scissors") {
-    console.log("You Win! Rock beats Scissors");
+    const current = document.querySelector("current");
+    current.textContent = "You Win! Rock beats Scissors";
     game.win++;
+    const player = document.querySelector("player");
+    player.textContent = "Player: " + game.win;
   }
   else if (playerSelection === "Paper" && computerSelection === "Rock") {
-    console.log("You Win! Paper beats Rock");
+    const current = document.querySelector("current");
+    current.textContent = "You Win! Paper beats Rock";
     game.win++;
+    const player = document.querySelector("player");
+    player.textContent = "Player: " + game.win;
   }
   else if (playerSelection === "Paper" && computerSelection === "Scissors") {
-    console.log("You Lose! Scissors beats Paper");
+    const current = document.querySelector("current");
+    current.textContent = "You Lose! Scissors beats Paper";
     game.loss++;
+    const computer = document.querySelector("computerscore");
+    computer.textContent = "Computer: " + game.loss;
   }
   else if (playerSelection === "Scissors" && computerSelection === "Rock") {
-    console.log("You Lose! Rock beats Scissors");
+    const current = document.querySelector("current");
+    current.textContent = "You Lose! Rock beats Scissors";
     game.loss++;
+    const computer = document.querySelector("computerscore")
+    computer.textContent = "Computer: " + game.loss;
 }
   else if (playerSelection === "Scissors" && computerSelection === "Paper") {
-    console.log("You Win! Scissors beats Paper");
+    const current = document.querySelector("current");
+    current.textContent = "You Win! Scissors beats Paper";
     game.win++;
+    const player = document.querySelector("player");
+    player.textContent = "Player: " + game.win;
   }
   else{
-    console.log("Draw! Luck if not on your side!")
+    const current = document.querySelector("current");
+    current.textContent = "Draw! Luck if not on your side!";
   }
+}
+
+const computerSelection = getComputerChoice();
+
+function getPlayerChoice(selection){
+  const playerSelection = selection;
 }
 
 function playGame() {
-  for (i=0; i<5; i++){
-    const playerSelection = getPlayerChoice();
+  while (game.win < 5 && game.loss < 5){
     const computerSelection = getComputerChoice();
-    playRound(playerSelection, computerSelection)}
+    playRound(playerSelection, computerSelection);}
   }
 
-function getscore() {
-  if (game.win > game.loss){
-    console.log("Yay!! You beat the computer in a game of 5!")
+function getScore() {
+  if (game.win === 5){
+    const current = document.querySelector("current");
+    current.textContent("Yay!! You beat the computer in a game of 5!");
   }
-  if (game.win < game.loss){
-    console.log("Noo!! The computer beat you in a game of 5!")
+  else{
+    const current = document.querySelector("current");
+    current.textContent("Noo!! The computer beat you in a game of 5!");
   }
-  else {console.log("You tied with the computer! Better luck next time...")}
 }
 
-playGame()
-getscore()
+const rock = document.querySelector('Rock')
+rock.addEventListener("click", () => { getPlayerChoice('Rock')});
+const paper = document.querySelector('Paper')
+paper.addEventListener("click", () => { getPlayerChoice('Paper')});
+const scissors = document.querySelector('Scissors')
+scissors.addEventListener("click", () => { getPlayerChoice('Scissors')});
+
+playGame();
+getScore();
